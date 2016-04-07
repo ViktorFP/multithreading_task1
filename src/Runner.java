@@ -8,8 +8,7 @@ public class Runner {
 
 	private static void start(Car... cars) {
 		for (Car car : cars) {
-			Thread thread = new Thread(car);
-			thread.start();
+			(new Thread(car)).start();
 			System.out.println("Car " + car.getName() + " started");
 		}
 		correctMinStep(cars);
@@ -17,7 +16,7 @@ public class Runner {
 
 	private static boolean hasFinished(Car... cars) {
 		for (Car car : cars) {
-			Thread thread = new Thread(car);
+			Thread thread = car.getThread();
 			if (!thread.isAlive()) {
 				winner = car.getName();
 				return true;
@@ -38,7 +37,7 @@ public class Runner {
 
 	private static void disqualify(Car... cars) {
 		for (Car car : cars) {
-			Thread thread=new Thread(car);
+			Thread thread = car.getThread();
 			if (thread.isAlive()) {
 				thread.interrupt();
 			}
@@ -51,8 +50,13 @@ public class Runner {
 				new Car("vas_VasyaTeam", 300), new Car("belas_CrashTeam", 500) };
 		// Start cars one by one.
 		start(cars);
-		// Observe which finishes first.
-		try {
+		try {// waiting threads' ends
+			for (Car car : cars) {
+				Thread thread = car.getThread();
+				thread.join();
+			}
+			// Observe which finishes first.
+
 			while (!hasFinished(cars)) {
 				Thread.sleep(timeSleep);
 			}

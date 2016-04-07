@@ -3,8 +3,9 @@ package by.epamlab.beans;
 import by.epamlab.Constants;
 
 public class Car implements Runnable {
-	private static final long MAX_DISTANCE = 10000;
+	private static final long MAX_DISTANCE = 1000;
 	private static final long DISTANCE_STEP = 100;
+
 	private long friction;
 	private long distance;
 	private String name;
@@ -21,9 +22,9 @@ public class Car implements Runnable {
 				Thread.sleep(friction);
 				distance += DISTANCE_STEP;
 			}
-			System.out.println(name + " finished");			
+			System.out.println(name + " finished");
 		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
+			//Thread.currentThread().interrupt();
 			System.out.println(name + Constants.INTERRUPTED_EXCEPTION);
 		}
 	}
@@ -44,4 +45,7 @@ public class Car implements Runnable {
 		this.friction = friction;
 	}
 
+	public Thread getThread() {
+		return Thread.currentThread();
+	}
 }

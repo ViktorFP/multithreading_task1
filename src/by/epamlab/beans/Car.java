@@ -1,9 +1,12 @@
 package by.epamlab.beans;
 
+import java.util.logging.Logger;
+
 import by.epamlab.Constants;
 
 public class Car implements Runnable {
 	private static final long MAX_DISTANCE = 2500;
+	Logger log = Logger.getLogger(Car.class.getName());
 	private static final long DISTANCE_STEP = 100;
 
 	private long friction;
@@ -21,6 +24,7 @@ public class Car implements Runnable {
 			while (distance < MAX_DISTANCE) {
 				Thread.sleep(friction);
 				distance += DISTANCE_STEP;
+				log.info(name + " " + distance);
 			}
 			System.out.println(name + " finished");
 		} catch (InterruptedException e) {
@@ -42,5 +46,5 @@ public class Car implements Runnable {
 
 	public void setFriction(long friction) {
 		this.friction = friction;
-	}	
+	}
 }
